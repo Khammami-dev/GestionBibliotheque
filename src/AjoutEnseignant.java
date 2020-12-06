@@ -2,8 +2,10 @@
 import controllers.EnseignantJpaController;
 import entities.Enseignant;
 import java.util.List;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -61,8 +63,6 @@ public class AjoutEnseignant extends javax.swing.JFrame {
         txtId = new javax.swing.JTextField();
         cmdAjouter = new javax.swing.JButton();
         cmdAnnuler = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lstEnseignant = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,9 +129,7 @@ public class AjoutEnseignant extends javax.swing.JFrame {
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -204,19 +202,6 @@ public class AjoutEnseignant extends javax.swing.JFrame {
 
         cmdAnnuler.setText("Anuller");
 
-        lstEnseignant.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(lstEnseignant);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -231,22 +216,18 @@ public class AjoutEnseignant extends javax.swing.JFrame {
                         .addComponent(cmdAjouter)
                         .addGap(18, 18, 18)
                         .addComponent(cmdAnnuler)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdAjouter)
                     .addComponent(cmdAnnuler))
-                .addGap(36, 36, 36))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54))
         );
 
         pack();
@@ -268,34 +249,18 @@ public class AjoutEnseignant extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelephoneActionPerformed
 
-     private void AfficheListeDesEnseignant(List<Enseignant> enseignants){ 
-           lstEnseignant.removeAll();
-            model.addColumn("id");
-            model.addColumn("nom");    
-            model.addColumn("prenom");
-            model.addColumn("addresse");
-            model.addColumn("telephone");
-            model.addColumn("email");
-            model.addColumn("grade");
-           for(Enseignant e : enseignants){
-               model.addRow(new Object[] { e.getId(),e.getNom(),e.getPrenom(),
-                   e.getAdresse(),e.getEmail(),e.getSexe(),e.getGrade() });
-           }
-           lstEnseignant.setModel(model);
-    }
+     
+    
+
     private void cmdAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAjouterActionPerformed
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("GestionBibliothequePU");
-        int id = Integer.parseInt(txtId.getText());
-        String nom = textNom.getText();
-        String prenom = textPrenom.getText();
-        String sexe = textSexe.getSelectedItem().toString();
-        String grade = textGrade.getText();
-        String addresse = textAddresse.getText();
-        String email = textEmail.getText();
-        int telephone = Integer.parseInt(txtTelephone.getText());
-        EnseignantJpaController conroller = new EnseignantJpaController(emf); 
-        Enseignant ens = new Enseignant(id,sexe,nom,prenom,addresse,telephone,email,grade); 
-        conroller.create(ens);   
+        
+        if(txtId.getText().equals("")){//comparer si la chaine entrer est vide
+        JOptionPane.showMessageDialog(null, "Veillez saisir le champ identifiant!", 
+                "Ajouter", 
+                JOptionPane.WARNING_MESSAGE);
+        textNom.requestFocus();
+        return;
+    }
         if(textNom.getText().equals("")){//comparer si la chaine entrer est vide
         JOptionPane.showMessageDialog(null, "Veillez saisir le champ nom !", 
                 "Ajouter", 
@@ -332,13 +297,26 @@ public class AjoutEnseignant extends javax.swing.JFrame {
         return;
     }
           if(textGrade.getText().equals("")){//comparer si la chaine entrer est vide
-        JOptionPane.showMessageDialog(null, "Veillez saisir le champ telephone!", 
+        JOptionPane.showMessageDialog(null, "Veillez saisir le champ Grade!", 
                 "Ajouter", 
                 JOptionPane.WARNING_MESSAGE);
         textGrade.requestFocus();
         return;
         
     }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("GestionBibliothequePU");
+        int id = Integer.parseInt(txtId.getText());
+        String nom = textNom.getText();
+        String prenom = textPrenom.getText();
+        String sexe = textSexe.getSelectedItem().toString();
+        String grade = textGrade.getText();
+        String addresse = textAddresse.getText();
+        String email = textEmail.getText();
+        int telephone = Integer.parseInt(txtTelephone.getText());
+        EnseignantJpaController conroller = new EnseignantJpaController(emf); 
+        Enseignant ens = new Enseignant(id,sexe,nom,prenom,addresse,telephone,email,grade); 
+        conroller.create(ens);   
+        
          
         // EcouteurButton eb = new EcouteurButton(this);
       /* EcouteurButton eb = new EcouteurButton(this);*/
@@ -397,8 +375,6 @@ public class AjoutEnseignant extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable lstEnseignant;
     private javax.swing.JTextField textAddresse;
     private javax.swing.JTextField textEmail;
     private javax.swing.JTextField textGrade;

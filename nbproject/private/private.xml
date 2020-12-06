@@ -3,14 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/controllers/EtudiantJpaController.java</file>
+            <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/ListEtudiants.java</file>
+            <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/SqlService.java</file>
             <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/Adherent.java</file>
             <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/controllers/EnseignantJpaController.java</file>
+            <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/AddEtud.java</file>
             <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/AjoutEnseignant.java</file>
-            <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/Emprunt.java</file>
+            <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/ListEnseignant.java</file>
             <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/ServiceEnseignant.java</file>
-            <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/Etudiant.java</file>
             <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/entities/Enseignant.java</file>
-            <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/Livre.java</file>
+            <file>file:/C:/Users/TOSHIBA/Documents/NetBeansProjects/GestionBibliotheque/src/entities/Etudiant.java</file>
         </group>
     </open-files>
 </project-private>
